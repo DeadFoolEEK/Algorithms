@@ -14,11 +14,13 @@ public class Process {
     private int bt;
     // completion time
     private int ct;
+    private boolean isDone;
 
     Process(int pid, int at, int bt){
         this.pid = pid;
         this.at = at;
         this.bt = bt;
+        isDone = false;
     }
 
     public int getPid(){
@@ -59,6 +61,14 @@ public class Process {
 
     public int getTat(){
         return tat;
+    }
+
+    public boolean getIsDone(){
+        return isDone;
+    }
+
+    public void setIsDoneToTrue(){
+        isDone = true;
     }
 
 }

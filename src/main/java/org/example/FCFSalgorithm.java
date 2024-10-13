@@ -1,7 +1,6 @@
 package org.example;
 
-
-public class FCFSalgorithm extends Algorithm {
+public class FCFSalgorithm extends CPUalgorithm {
 
     FCFSalgorithm(){
         super();
@@ -28,6 +27,7 @@ public class FCFSalgorithm extends Algorithm {
     public void performAlgorithm() {
         sortProcesses();
         for (Process process : processes) {
+            processingOrder.add(process);
             process.setCt(timePassed + process.getBt());
             process.setTat(process.getCt() - process.getAt());
             process.setWt(process.getTat() - process.getBt());
