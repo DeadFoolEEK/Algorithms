@@ -3,7 +3,7 @@ package org.example;
 import java.util.Arrays;
 
 public abstract class RAMalgorithm {
-    //https://os-project-page-replacement.vercel.app/result
+    //https://os-project-page-replacement.vercel.app
     protected int totalPageFaults;
     protected int totalHits;
     protected double hitRate;

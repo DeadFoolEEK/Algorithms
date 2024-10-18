@@ -7,6 +7,9 @@ public class Main {
        //testSJF();
        //testFIFO();
        //testLRU();
+        // dataReadTestCPU();
+        //dataReadTestRAM();
+        new Frame();
     }
 
     public static void testFCFS(){
@@ -71,6 +74,16 @@ public class Main {
         System.out.println("Page Faults: " + lru.getTotalPageFaults());
         System.out.println("Hits: " + lru.getTotalHits());
         System.out.println("Hit rate: " + lru.getHitRate() * 100);
+    }
+
+    public static void dataReadTestCPU(){
+        FileOperator fileOperator = new FileOperator();
+        System.out.println(fileOperator.getDataToCPUalgorithm("daneCPU.txt"));
+    }
+
+    public static void dataReadTestRAM(){
+        FileOperator fileOperator = new FileOperator();
+        System.out.println(fileOperator.getDataToRAMalgorithm("daneRAM.txt"));
     }
 
 }
