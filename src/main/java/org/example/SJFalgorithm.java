@@ -2,8 +2,10 @@ package org.example;
 
 public class SJFalgorithm extends CPUalgorithm {
 
+
     SJFalgorithm(){
         super();
+        this.name = "SJF";
     }
 
     private int getNextArrivalTime(int currentTime) {
@@ -59,5 +61,4 @@ public class SJFalgorithm extends CPUalgorithm {
         setMeanTat();
         setMeanWt();
     }
-
 }

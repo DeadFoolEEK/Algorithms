@@ -1,5 +1,9 @@
 package org.example;
 
+import jdk.dynalink.NamedOperation;
+
+import java.util.ArrayList;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -10,14 +14,58 @@ public class Main {
         // dataReadTestCPU();
         //dataReadTestRAM();
         new Frame();
+        //testProcessesGenerator();
+    }
+
+    public static void testProcessesGenerator(){
+        ProcessesGenerator generator = new ProcessesGenerator();
+        generator.setMean(10.0);
+        generator.setStandardDeviation(5.0);
+
+        int[] burstTimes = generator.generateBurstTime(100, 1,10);
+
+        double sum = 0;
+
+        for (int time : burstTimes) {
+            //System.out.println("Burst Time: " + time);
+            sum += time;
+        }
+
+        double mean = sum/burstTimes.length;
+
+        double sum2 = 0;
+
+        for (int time : burstTimes) {
+            sum2 += Math.pow((time-mean),2);
+        }
+
+        double sDeviation = Math.sqrt(sum2/burstTimes.length);
+
+        System.out.println("Średnia: " + mean + ", Odchyelenie standardowe: " + sDeviation);
+
+        int[] at = generator.generateArrivalTimeIncrement(100);
+
+        //ArrayList<Process> processes = new ArrayList<>();
+
+        FCFSalgorithm fcs = new FCFSalgorithm();
+
+        for(int i = 0; i < 100; i++){
+            fcs.addProcess(new Process(i,at[i],burstTimes[i]));
+        }
+
+        fcs.performAlgorithm();
+        fcs.getFullProcessesData();
+        System.out.println("Time passed: " + fcs.getTimePassed());
+        System.out.println("Mean Tat: " + fcs.getMeanTat());
+        System.out.println("Mean Wt: " + fcs.getMeanWt());
+
     }
 
     public static void testFCFS(){
-        Process process1 = new Process(1,2,6);
-        Process process2 = new Process(2,5,2);
-        Process process3 = new Process(3,1,8);
-        Process process4 = new Process(4,0,3);
-        Process process5 = new Process(5,4,4);
+        Process process1 = new Process(1,0,21);
+        Process process2 = new Process(2,0,3);
+        Process process3 = new Process(3,0,6);
+        Process process4 = new Process(4,0,2);
 
         FCFSalgorithm fcs = new FCFSalgorithm();
 
@@ -25,7 +73,6 @@ public class Main {
         fcs.addProcess(process2);
         fcs.addProcess(process3);
         fcs.addProcess(process4);
-        fcs.addProcess(process5);
 
         fcs.performAlgorithm();
         fcs.getFullProcessesData();

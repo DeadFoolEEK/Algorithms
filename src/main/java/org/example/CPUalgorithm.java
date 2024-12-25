@@ -9,6 +9,7 @@ public abstract class CPUalgorithm {
     protected int timePassed;
     protected double meanWt;
     protected double meanTat;
+    protected String name;
 
     CPUalgorithm(){
         processes = new ArrayList<>();
@@ -61,4 +62,7 @@ public abstract class CPUalgorithm {
         return processingOrder;
     }
 
+    public String getName(){
+        return name;
+    }
 }

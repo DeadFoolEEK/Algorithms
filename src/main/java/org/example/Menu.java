@@ -5,17 +5,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Menu extends JPanel {
+public class Menu {
     // 204, 119, 34 Ochre RGB
     // 243, 245, 240 Snow white RGB
-    private int[] backgroundRGB = {60, 65, 66};
+    private Frame frame;
     private JPanel mainPanel;
     private JButton cpuAlgorithmButton;
     private JButton ramAlgorithmButton;
     private JButton exitButton;
     private JLabel menuTitle;
 
-    Menu(){
+    Menu(Frame frame){
+        this.frame = frame;
         mainPanel();
         mainPanelMakeGap();
         createMenuTitle();
@@ -27,7 +28,7 @@ public class Menu extends JPanel {
 
     private void mainPanel(){
         mainPanel = new JPanel();
-        mainPanel.setBackground(new Color(backgroundRGB[0],backgroundRGB[1],backgroundRGB[2]));
+        mainPanel.setBackground(new Color(60, 65, 66));
         mainPanel.setSize(1200,700);
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
     }
@@ -67,6 +68,7 @@ public class Menu extends JPanel {
         cpuAlgorithmButton.setBorderPainted(false);
         cpuAlgorithmButton.setFocusPainted(false);
         cpuAlgorithmButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        cpuAlgorithmButton.addActionListener(frame);
         cpuAlgorithmButton.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -89,6 +91,7 @@ public class Menu extends JPanel {
         ramAlgorithmButton.setBorderPainted(false);
         ramAlgorithmButton.setFocusPainted(false);
         ramAlgorithmButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        ramAlgorithmButton.addActionListener(frame);
         ramAlgorithmButton.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -111,6 +114,7 @@ public class Menu extends JPanel {
         exitButton.setBorderPainted(false);
         exitButton.setFocusPainted(false);
         exitButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        exitButton.addActionListener(frame);
         exitButton.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -122,12 +126,18 @@ public class Menu extends JPanel {
                 exitButton.setBackground(new Color(204, 119, 34));
             }
         });
-        exitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
+    }
+
+    public JButton getCpuAlgorithmButton(){
+        return cpuAlgorithmButton;
+    }
+
+    public JButton getRamAlgorithmButton(){
+        return ramAlgorithmButton;
+    }
+
+    public JButton getExitButton(){
+        return exitButton;
     }
 
     public void showMainPanel(){
@@ -136,12 +146,6 @@ public class Menu extends JPanel {
 
     public void hideMainPanel(){
         mainPanel.setVisible(false);
-    }
-
-    public void setBackgroundRGB(int r, int g, int b){
-        backgroundRGB[0] = r;
-        backgroundRGB[1] = g;
-        backgroundRGB[2] = b;
     }
 
 }

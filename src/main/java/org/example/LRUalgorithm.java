@@ -9,6 +9,7 @@ public class LRUalgorithm extends RAMalgorithm{
     LRUalgorithm(int numberOfFrames, int[] referencesSequence){
         super(numberOfFrames, referencesSequence);
         fillAge();
+        this.name = "LRU";
     }
 
     private void fillAge(){

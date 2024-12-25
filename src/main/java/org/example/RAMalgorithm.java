@@ -10,6 +10,7 @@ public abstract class RAMalgorithm {
     protected int numberOfFrames;
     protected int[] referencesSequence;
     protected int[] memory;
+    protected String name;
 
     RAMalgorithm(int numberOfFrames, int[] referencesSequence){
         this.numberOfFrames = numberOfFrames;
@@ -32,6 +33,10 @@ public abstract class RAMalgorithm {
 
     protected double getHitRate(){
         return hitRate;
+    }
+
+    public String getName(){
+        return name;
     }
 
 }

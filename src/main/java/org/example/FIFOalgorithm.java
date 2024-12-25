@@ -4,6 +4,7 @@ public class FIFOalgorithm extends RAMalgorithm{
 
     FIFOalgorithm(int numberOfFrames, int[] referencesSequence){
         super(numberOfFrames, referencesSequence);
+        this.name = "FIFO";
     }
 
     public void performAlgorithm() {
