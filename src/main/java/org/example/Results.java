@@ -14,8 +14,8 @@ public class Results{
         this.type = type;
         if(type.equals("CPU")){
             ArrayList<Process> processes = new ArrayList<>();
-            for(int i = 0; i < dataToCPUalgorithm.size() ;i++){
-                processes.add(new Process(i,dataToCPUalgorithm.get(i).get(0),dataToCPUalgorithm.get(i).get(1)));
+            for(int i = 0; i < dataToCPUalgorithm.get(0).size() ;i++){
+                processes.add(new Process(i,dataToCPUalgorithm.get(0).get(i),dataToCPUalgorithm.get(0).get(i)));
             }
             fcfSalgorithm = new FCFSalgorithm();
             sjFalgorithm = new SJFalgorithm();

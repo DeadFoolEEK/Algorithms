@@ -22,7 +22,7 @@ public class Main {
         generator.setMean(10.0);
         generator.setStandardDeviation(5.0);
 
-        int[] burstTimes = generator.generateBurstTime(100, 1,10);
+       ArrayList<Integer> burstTimes = generator.generateBurstTime(100, 1,10);
 
         double sum = 0;
 
@@ -31,7 +31,7 @@ public class Main {
             sum += time;
         }
 
-        double mean = sum/burstTimes.length;
+        double mean = sum/burstTimes.size();
 
         double sum2 = 0;
 
@@ -39,18 +39,18 @@ public class Main {
             sum2 += Math.pow((time-mean),2);
         }
 
-        double sDeviation = Math.sqrt(sum2/burstTimes.length);
+        double sDeviation = Math.sqrt(sum2/burstTimes.size());
 
         System.out.println("Średnia: " + mean + ", Odchyelenie standardowe: " + sDeviation);
 
-        int[] at = generator.generateArrivalTimeIncrement(100);
+        ArrayList<Integer> at = generator.generateArrivalTimeIncrement(100);
 
         //ArrayList<Process> processes = new ArrayList<>();
 
         FCFSalgorithm fcs = new FCFSalgorithm();
 
         for(int i = 0; i < 100; i++){
-            fcs.addProcess(new Process(i,at[i],burstTimes[i]));
+            fcs.addProcess(new Process(i,at.get(i),burstTimes.get(i)));
         }
 
         fcs.performAlgorithm();

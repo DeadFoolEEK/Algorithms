@@ -20,10 +20,10 @@ public class ResultsPanel extends JPanel {
         addThings();
     }
 
-    private void mainPanel(){
+    private void mainPanel() {
         this.setBackground(new Color(60, 65, 66));
-        this.setSize(1200,700);
-        this.setLayout(new BorderLayout());
+        this.setSize(1200, 700);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
     private void upperPanel(){

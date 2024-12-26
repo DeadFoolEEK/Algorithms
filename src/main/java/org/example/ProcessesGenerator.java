@@ -17,7 +17,7 @@ public class ProcessesGenerator {
         setStandardDeviation(standardDeviation);
     }
 
-    public int[] generateBurstTime(int amount, int minValue, int maxValue) {
+    public ArrayList<Integer> generateBurstTime(int amount, int minValue, int maxValue) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Ilość musi być większa od 0");
         }
@@ -29,7 +29,7 @@ public class ProcessesGenerator {
         }
 
         Random random = new Random();
-        int[] data = new int[amount];
+        ArrayList<Integer> data = new ArrayList<>();
 
         for (int i = 0; i < amount; i++) {
             int value;
@@ -37,40 +37,44 @@ public class ProcessesGenerator {
                 value = (int) Math.round(mean + standardDeviation * random.nextGaussian());
             } while (value < minValue || value > maxValue);
 
-            data[i] = value;
+            data.add(value);
         }
 
         return data;
     }
 
-    public int[] generateBurstTimeTotalRandom(int amount, int minValue, int maxValue){
-        int[] data = new int[amount];
+    public ArrayList<Integer> generateBurstTimeTotalRandom(int amount, int minValue, int maxValue){
+        ArrayList<Integer> data = new ArrayList<>();
         Random random = new Random();
         for(int i = 0; i < amount ;i++){
-            data[i] = random.nextInt((maxValue - minValue) + 1) + minValue;
+            data.add(random.nextInt((maxValue - minValue) + 1) + minValue);
         }
         return data;
     }
 
-    public int[] generateArrivalTimeIncrement(int amount){
-        int[] data = new int[amount];
+    public ArrayList<Integer> generateArrivalTimeIncrement(int amount){
+        ArrayList<Integer> data = new ArrayList<>();
         for(int i = 0; i < amount ;i++){
-            data[i] = i;
+            data.add(i);
         }
         return data;
     }
 
-    public int[] generateArrivalTimeTotalRandom(int amount, int minValue, int maxValue){
-        int[] data = new int[amount];
+    public ArrayList<Integer> generateArrivalTimeTotalRandom(int amount, int minValue, int maxValue){
+        ArrayList<Integer> data = new ArrayList<>();
         Random random = new Random();
         for(int i = 0; i < amount ;i++){
-            data[i] = random.nextInt((maxValue - minValue) + 1) + minValue;
+            data.add(random.nextInt((maxValue - minValue) + 1) + minValue);
         }
         return data;
     }
 
-    public int[] generateArrivalTimeConst(int amount){
-        return new int[amount];
+    public ArrayList<Integer> generateArrivalTimeConst(int amount){
+        ArrayList<Integer> data = new ArrayList<>();
+        for(int i = 0; i < amount; i++){
+            data.add(0);
+        }
+        return data;
     }
 
     public void setMean(double mean){
