@@ -62,6 +62,10 @@ public abstract class CPUalgorithm {
         return processingOrder;
     }
 
+    public ArrayList<Process> getProcesses(){
+        return processes;
+    }
+
     public String getName(){
         return name;
     }

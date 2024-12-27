@@ -16,6 +16,7 @@ public class Frame extends JFrame implements ActionListener {
     private Results results;
     private String type;
     private ProcessesGenerator processesGenerator;
+    private ReferencesGenerator referencesGenerator;
 
     Frame(){
         this.setResizable(false);
@@ -93,19 +94,39 @@ public class Frame extends JFrame implements ActionListener {
         else if(e.getSource() == getDataPanel.getGoNextButton()){
             if(type.equals("CPU")){
                 results = new Results(type, fileOperator.getDataToCPUalgorithm(fileOperator.getChosenFile()), new ArrayList<Integer>());
+                cpUalgorithmsRandomizePanel.setThisInvisible();
+                resultsPanel.setType(type);
+                resultsPanel.setThisVisible();
             }
             else if(type.equals("RAM")){
                 results = new Results(type, new ArrayList<ArrayList<Integer>>(), fileOperator.getDataToRAMalgorithm(fileOperator.getChosenFile()));
+                raMalgorithmsRandomizePanel.setThisInvisible();
+                resultsPanel.setType(type);
+                resultsPanel.setThisVisible();
             }
             getDataPanel.setThisInvisible();
             resultsPanel.setThisVisible();
         }
         else if(e.getSource() == cpUalgorithmsRandomizePanel.getStartButton()){
+
             if(!cpUalgorithmsRandomizePanel.getSelectedBurstOption().equals("None") && !cpUalgorithmsRandomizePanel.getSelectedArrivalOption().equals("None") && cpUalgorithmsRandomizePanel.getAmount() != -1){
-                // Process(int pid, int at, int bt)
+
                 int amount = cpUalgorithmsRandomizePanel.getAmount();
                 processesGenerator = new ProcessesGenerator();
                 ArrayList<ArrayList<Integer>> dataToCPUalgorithm = new ArrayList<>();
+
+                if(cpUalgorithmsRandomizePanel.getSelectedArrivalOption().equals("Option 1")){
+                    ArrayList<Integer> at = processesGenerator.generateArrivalTimeIncrement(amount);
+                    dataToCPUalgorithm.add(at);
+                }
+                else if(cpUalgorithmsRandomizePanel.getSelectedArrivalOption().equals("Option 2")){
+                    ArrayList<Integer> at = processesGenerator.generateArrivalTimeTotalRandom(amount, cpUalgorithmsRandomizePanel.getArrivalRandomMin(), cpUalgorithmsRandomizePanel.getArrivalRandomMax());
+                    dataToCPUalgorithm.add(at);
+                }
+                else if(cpUalgorithmsRandomizePanel.getSelectedArrivalOption().equals("Option 3")){
+                    ArrayList<Integer> at = processesGenerator.generateArrivalTimeConst(amount);
+                    dataToCPUalgorithm.add(at);
+                }
 
                 if(cpUalgorithmsRandomizePanel.getSelectedBurstOption().equals("Option 2")){
                     if(cpUalgorithmsRandomizePanel.getMean() != -1 && cpUalgorithmsRandomizePanel.getStandardDeviation() != -1 && cpUalgorithmsRandomizePanel.getGaussMin() != -1 && cpUalgorithmsRandomizePanel.getGaussMax() != -1){
@@ -122,29 +143,39 @@ public class Frame extends JFrame implements ActionListener {
                     }
                 }
 
-                if(cpUalgorithmsRandomizePanel.getSelectedArrivalOption().equals("Option 1")){
-                    ArrayList<Integer> at = processesGenerator.generateArrivalTimeIncrement(amount);
-                    dataToCPUalgorithm.add(at);
-                }
-                else if(cpUalgorithmsRandomizePanel.getSelectedArrivalOption().equals("Option 2")){
-                    ArrayList<Integer> at = processesGenerator.generateArrivalTimeTotalRandom(amount, cpUalgorithmsRandomizePanel.getArrivalRandomMin(), cpUalgorithmsRandomizePanel.getArrivalRandomMax());
-                    dataToCPUalgorithm.add(at);
-                }
-                else if(cpUalgorithmsRandomizePanel.getSelectedArrivalOption().equals("Option 3")){
-                    ArrayList<Integer> at = processesGenerator.generateArrivalTimeConst(amount);
-                    dataToCPUalgorithm.add(at);
-                }
-
                 if(dataToCPUalgorithm.size() == 2){
                     results = new Results(type, dataToCPUalgorithm, new ArrayList<Integer>());
                     cpUalgorithmsRandomizePanel.setThisInvisible();
+                    resultsPanel.setType(type);
                     resultsPanel.setThisVisible();
                 }
 
             }
         }
-        else if(e.getSource() == resultsPanel.getSaveButton()){
+        else if(e.getSource() == raMalgorithmsRandomizePanel.getStartButton()){
 
+            if(raMalgorithmsRandomizePanel.getAmount() != -1 && raMalgorithmsRandomizePanel.getNumberOfFrames() != -1 && raMalgorithmsRandomizePanel.getReferencesRandomMin() != -1 && raMalgorithmsRandomizePanel.getReferencesRandomMax() != -1){
+                referencesGenerator = new ReferencesGenerator();
+                ArrayList<Integer> references = referencesGenerator.generateReferencesTotalRandom(raMalgorithmsRandomizePanel.getAmount(), raMalgorithmsRandomizePanel.getReferencesRandomMin(), raMalgorithmsRandomizePanel.getReferencesRandomMax(), raMalgorithmsRandomizePanel.getNumberOfFrames());
+                results = new Results(type, new ArrayList<ArrayList<Integer>>(), references);
+                raMalgorithmsRandomizePanel.setThisInvisible();
+                resultsPanel.setType(type);
+                resultsPanel.setThisVisible();
+            }
+        }
+        else if(e.getSource() == resultsPanel.getSaveButton()){
+            if(type.equals("CPU")){
+                double[] meanWt = {results.getFcfSalgorithm().getMeanWt(), results.getSjFalgorithm().getMeanWt()};
+                double[] meanTat = {results.getFcfSalgorithm().getMeanTat(), results.getSjFalgorithm().getMeanTat()};
+                fileOperator.saveCPUresults(results.getFcfSalgorithm().getProcesses(),meanWt, meanTat);
+                resultsPanel.getSaveButton().setVisible(false);
+            }
+            else{
+                int[] totalPageFaults = {results.getFifOalgorithm().getTotalPageFaults(), results.getLrUalgorithm().getTotalPageFaults()};
+                int[] totalHits = {results.getFifOalgorithm().getTotalHits(), results.getLrUalgorithm().getTotalHits()};
+                fileOperator.saveRAMresults(results.getFifOalgorithm().referencesSequence, totalPageFaults, totalHits);
+                resultsPanel.getSaveButton().setVisible(false);
+            }
         }
         else if(e.getSource() == resultsPanel.getExitButton()){
             System.exit(0);

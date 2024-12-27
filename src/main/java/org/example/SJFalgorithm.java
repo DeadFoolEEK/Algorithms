@@ -2,23 +2,12 @@ package org.example;
 
 public class SJFalgorithm extends CPUalgorithm {
 
-
-    SJFalgorithm(){
+    SJFalgorithm() {
         super();
         this.name = "SJF";
     }
 
-    private int getNextArrivalTime(int currentTime) {
-        int nextArrival = Integer.MAX_VALUE;
-        for (Process process : processes) {
-            if (!process.getIsDone() && process.getAt() > currentTime) {
-                nextArrival = Math.min(nextArrival, process.getAt());
-            }
-        }
-        return nextArrival == Integer.MAX_VALUE ? currentTime : nextArrival;
-    }
-
-    private boolean getIsThisTheEnd() {
+    private boolean areAllProcessesDone() {
         for (Process process : processes) {
             if (!process.getIsDone()) {
                 return false;
@@ -27,11 +16,11 @@ public class SJFalgorithm extends CPUalgorithm {
         return true;
     }
 
-    private Process getProcess(int currentTime) {
+    private Process getNextProcess(int currentTime) {
         Process chosenProcess = null;
         for (Process process : processes) {
             if (!process.getIsDone() && process.getAt() <= currentTime) {
-                if (chosenProcess == null || process.getBt() < chosenProcess.getBt()) {
+                if (chosenProcess == null || process.getBt() < chosenProcess.getBt() || (process.getBt() == chosenProcess.getBt() && process.getPid() < chosenProcess.getPid())) {
                     chosenProcess = process;
                 }
             }
@@ -40,10 +29,9 @@ public class SJFalgorithm extends CPUalgorithm {
     }
 
     public void performAlgorithm() {
-        boolean done = false;
-        Process chosenProcess;
-        while (!done) {
-            chosenProcess = getProcess(timePassed);
+        while (!areAllProcessesDone()) {
+            Process chosenProcess = getNextProcess(timePassed);
+
             if (chosenProcess != null) {
                 chosenProcess.setCt(timePassed + chosenProcess.getBt());
                 chosenProcess.setTat(chosenProcess.getCt() - chosenProcess.getAt());
@@ -51,12 +39,9 @@ public class SJFalgorithm extends CPUalgorithm {
                 timePassed += chosenProcess.getBt();
                 chosenProcess.setIsDoneToTrue();
                 processingOrder.add(chosenProcess);
+            } else {
+                timePassed++;
             }
-
-            else {
-                timePassed = getNextArrivalTime(timePassed);
-            }
-            done = getIsThisTheEnd();
         }
         setMeanTat();
         setMeanWt();

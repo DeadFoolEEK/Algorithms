@@ -35,6 +35,10 @@ public abstract class RAMalgorithm {
         return hitRate;
     }
 
+    protected int[] getReferencesSequence(){
+        return referencesSequence;
+    }
+
     public String getName(){
         return name;
     }

@@ -8,6 +8,15 @@ public class RAMalgorithmsRandomizePanel extends JPanel {
     private Frame frame;
     private JButton goBackButton;
     private JButton startButton;
+    private JLabel amountLabel;
+    private JTextField amountField;
+    private JLabel referenceSequenceLabel;
+    private JLabel numberOfFramesLabel;
+    private JTextField numberOfFramesField;
+    private JLabel referencesRandomMinLabel;
+    private JLabel referencesRandomMaxLabel;
+    private JTextField referencesRandomMinField;
+    private JTextField referencesRandomMaxField;
 
     RAMalgorithmsRandomizePanel(Frame frame){
         this.frame = frame;
@@ -15,6 +24,12 @@ public class RAMalgorithmsRandomizePanel extends JPanel {
         mainPanel();
         createGoBackButton();
         createStartButton();
+        createAmountLabel();
+        createAmountField();
+        createReferenceSequenceLabel();
+        createNumberOfFramesLabel();
+        createNumberOfFramesField();
+        createReferencesRandomOptions();
         addThings();
     }
 
@@ -22,6 +37,61 @@ public class RAMalgorithmsRandomizePanel extends JPanel {
         this.setBackground(new Color(60, 65, 66));
         this.setSize(1200, 700);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    }
+
+    private void createAmountLabel() {
+        amountLabel = new JLabel("References amount");
+        amountLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        amountLabel.setFont(new Font("Helvetica", Font.BOLD, 20));
+        amountLabel.setForeground(new Color(243, 245, 240));
+    }
+
+    private void createReferenceSequenceLabel() {
+        referenceSequenceLabel = new JLabel("Reference sequence");
+        referenceSequenceLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        referenceSequenceLabel.setFont(new Font("Helvetica", Font.BOLD, 20));
+        referenceSequenceLabel.setForeground(new Color(243, 245, 240));
+    }
+
+    private void createNumberOfFramesLabel() {
+        numberOfFramesLabel = new JLabel("Number of frames");
+        numberOfFramesLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        numberOfFramesLabel.setFont(new Font("Helvetica", Font.BOLD, 20));
+        numberOfFramesLabel.setForeground(new Color(243, 245, 240));
+    }
+
+    private void createAmountField() {
+        amountField = new JTextField(10);
+        amountField.setMaximumSize(new Dimension(200, 30));
+        amountField.setAlignmentX(Component.CENTER_ALIGNMENT);
+    }
+
+    private void createNumberOfFramesField() {
+        numberOfFramesField = new JTextField(10);
+        numberOfFramesField.setMaximumSize(new Dimension(200, 30));
+        numberOfFramesField.setAlignmentX(Component.CENTER_ALIGNMENT);
+    }
+
+    private void createReferencesRandomOptions(){
+        referencesRandomMinLabel = new JLabel("Min value");
+        referencesRandomMinLabel .setAlignmentX(Component.CENTER_ALIGNMENT);
+        referencesRandomMinLabel .setFont(new Font("Helvetica", Font.PLAIN, 10));
+        referencesRandomMinLabel .setForeground(new Color(243, 245, 240));
+
+        referencesRandomMinField = new JTextField(10);
+        referencesRandomMinField.setMaximumSize(new Dimension(200, 30));
+        referencesRandomMinField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //referencesRandomMinField.setEditable(false);
+
+        referencesRandomMaxLabel = new JLabel("Max value");
+        referencesRandomMaxLabel .setAlignmentX(Component.CENTER_ALIGNMENT);
+        referencesRandomMaxLabel .setFont(new Font("Helvetica", Font.PLAIN, 10));
+        referencesRandomMaxLabel .setForeground(new Color(243, 245, 240));
+
+        referencesRandomMaxField = new JTextField(10);
+        referencesRandomMaxField.setMaximumSize(new Dimension(200, 30));
+        referencesRandomMaxField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //referencesRandomMaxField.setEditable(false);
     }
 
     private void createGoBackButton() {
@@ -73,6 +143,15 @@ public class RAMalgorithmsRandomizePanel extends JPanel {
 
     private void addThings() {
         this.add(goBackButton);
+        this.add(amountLabel);
+        this.add(amountField);
+        this.add(referenceSequenceLabel);
+        this.add(referencesRandomMinLabel);
+        this.add(referencesRandomMinField);
+        this.add(referencesRandomMaxLabel);
+        this.add(referencesRandomMaxField);
+        this.add(numberOfFramesLabel);
+        this.add(numberOfFramesField);
         this.add(startButton);
     }
 
@@ -90,6 +169,62 @@ public class RAMalgorithmsRandomizePanel extends JPanel {
 
     public JButton getStartButton(){
         return startButton;
+    }
+
+    public int getAmount() {
+        try {
+            String text = amountField.getText().trim();
+            if(Integer.parseInt(text) <= 0){
+                JOptionPane.showMessageDialog(this, "Invalid input for Processes Amount. Please enter a valid integer.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return -1;
+            }
+            return Integer.parseInt(text);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid input for Processes Amount. Please enter a valid integer.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return -1; // Return a default or error value.
+        }
+    }
+
+    public int getNumberOfFrames() {
+        try {
+            String text = numberOfFramesField.getText().trim();
+            if(Integer.parseInt(text) <= 0){
+                JOptionPane.showMessageDialog(this, "Invalid input for Number of frames. Please enter a valid integer.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return -1;
+            }
+            return Integer.parseInt(text);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid input for Number of frames. Please enter a valid integer.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return -1; // Return a default or error value.
+        }
+    }
+
+    public int getReferencesRandomMin() {
+        try {
+            String text = referencesRandomMinField.getText().trim();
+            if(Integer.parseInt(text) <= 0){
+                JOptionPane.showMessageDialog(this, "Invalid input for Min value. Please enter a valid integer.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return -1;
+            }
+            return Integer.parseInt(text);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid input for Min value. Please enter a valid integer.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return -1; // Return a default or error value.
+        }
+    }
+
+    public int getReferencesRandomMax() {
+        try {
+            String text = referencesRandomMaxField.getText().trim();
+            if(Integer.parseInt(text) <= 0){
+                JOptionPane.showMessageDialog(this, "Invalid input for Max value. Please enter a valid integer.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return -1;
+            }
+            return Integer.parseInt(text);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid input for Max value. Please enter a valid integer.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return -1; // Return a default or error value.
+        }
     }
 
 }

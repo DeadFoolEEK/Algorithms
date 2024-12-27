@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class FCFSalgorithm extends CPUalgorithm {
 
-    // Konstruktor
     FCFSalgorithm() {
         super();
         this.name = "FCFS";
@@ -12,7 +11,6 @@ public class FCFSalgorithm extends CPUalgorithm {
 
     public void performAlgorithm() {
         while (true) {
-            // Lista procesów dostępnych w bieżącym czasie
             ArrayList<Process> availableProcesses = new ArrayList<>();
             for (Process process : processes) {
                 if (!process.getIsDone() && process.getAt() <= timePassed) {
@@ -20,9 +18,7 @@ public class FCFSalgorithm extends CPUalgorithm {
                 }
             }
 
-            // Jeśli nie ma dostępnych procesów
             if (availableProcesses.isEmpty()) {
-                // Sprawdź, czy są jeszcze jakieś procesy do przetworzenia
                 Process nextArrival = null;
                 for (Process process : processes) {
                     if (!process.getIsDone()) {
@@ -32,34 +28,27 @@ public class FCFSalgorithm extends CPUalgorithm {
                     }
                 }
 
-                // Jeśli nie ma więcej procesów, kończymy
                 if (nextArrival == null) {
                     break;
                 }
 
-                // Przesuń czas do czasu przyjścia najwcześniejszego procesu
                 timePassed = nextArrival.getAt();
-                continue; // Kontynuujemy pętlę, aby uwzględnić nowy czas
+                continue;
             }
 
-            // Sortowanie dostępnych procesów według czasu przyjścia
             availableProcesses.sort((p1, p2) -> Integer.compare(p1.getAt(), p2.getAt()));
 
-            // Pobranie pierwszego procesu do przetworzenia
             Process nextProcess = availableProcesses.get(0);
-            processingOrder.add(nextProcess); // Dodanie do kolejności przetwarzania
+            processingOrder.add(nextProcess);
 
-            // Aktualizacja czasów dla procesu
-            nextProcess.setCt(timePassed + nextProcess.getBt()); // Completion Time
-            nextProcess.setTat(nextProcess.getCt() - nextProcess.getAt()); // Turn Around Time
-            nextProcess.setWt(nextProcess.getTat() - nextProcess.getBt()); // Waiting Time
-            nextProcess.setIsDoneToTrue(); // Oznaczenie procesu jako zakończonego
+            nextProcess.setCt(timePassed + nextProcess.getBt());
+            nextProcess.setTat(nextProcess.getCt() - nextProcess.getAt());
+            nextProcess.setWt(nextProcess.getTat() - nextProcess.getBt());
+            nextProcess.setIsDoneToTrue();
 
-            // Przesunięcie czasu symulacji
             timePassed = nextProcess.getCt();
         }
 
-        // Obliczenie średnich czasów
         setMeanTat();
         setMeanWt();
     }
