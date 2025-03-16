@@ -37,12 +37,19 @@ public class CPUalgorithmsRandomizePanel extends JPanel {
     private JLabel arrivalRandomMaxLabel;
     private JTextField arrivalRandomMinField;
     private JTextField arrivalRandomMaxField;
+    private JRadioButton singleButton;
+    private JRadioButton seriesButton;
+    private ButtonGroup singleSeriesGroup;
+    private JLabel seriesAmountLabel;
+    private JTextField seriesAmountField;
+    private JPanel upperPanel;
 
     CPUalgorithmsRandomizePanel(Frame frame) {
         this.frame = frame;
         this.setVisible(false);
         mainPanel();
         createGoBackButton();
+        createUpperPanel();
         createAmountLabel();
         createAmountField();
         createArrivalTimeLabel();
@@ -52,6 +59,9 @@ public class CPUalgorithmsRandomizePanel extends JPanel {
         createBurstTimeOptions();
         createBurstRandomOptionInputs();
         createBurstGaussOptionInputs();
+        createSeriesAmountLabel();
+        createSeriesAmountField();
+        createSingleSeriesButtonsGroup();
         createStartButton();
         addThings();
     }
@@ -65,7 +75,7 @@ public class CPUalgorithmsRandomizePanel extends JPanel {
     private void createGoBackButton() {
         goBackButton = new JButton("Back");
         goBackButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        goBackButton.setFont(new Font("Helvetica", Font.BOLD, 20));
+        goBackButton.setFont(new Font("Helvetica", Font.BOLD, 15));
         goBackButton.setBackground(new Color(204, 119, 34));
         goBackButton.setForeground(new Color(243, 245, 240));
         goBackButton.setBorderPainted(false);
@@ -165,7 +175,7 @@ public class CPUalgorithmsRandomizePanel extends JPanel {
         burstRandomMinLabel.setForeground(new Color(243, 245, 240));
 
         burstRandomMinField = new JTextField(10);
-        burstRandomMinField.setMaximumSize(new Dimension(200, 30));
+        burstRandomMinField.setMaximumSize(new Dimension(200, 20));
         burstRandomMinField.setAlignmentX(Component.CENTER_ALIGNMENT);
         burstRandomMinField.setEditable(false);
 
@@ -175,7 +185,7 @@ public class CPUalgorithmsRandomizePanel extends JPanel {
         burstRandomMaxLabel.setForeground(new Color(243, 245, 240));
 
         burstRandomMaxField = new JTextField(10);
-        burstRandomMaxField.setMaximumSize(new Dimension(200, 30));
+        burstRandomMaxField.setMaximumSize(new Dimension(200, 20));
         burstRandomMaxField.setAlignmentX(Component.CENTER_ALIGNMENT);
         burstRandomMaxField.setEditable(false);
     }
@@ -187,7 +197,7 @@ public class CPUalgorithmsRandomizePanel extends JPanel {
         meanLabel.setForeground(new Color(243, 245, 240));
 
         meanField = new JTextField(10);
-        meanField.setMaximumSize(new Dimension(200, 30));
+        meanField.setMaximumSize(new Dimension(200, 20));
         meanField.setAlignmentX(Component.CENTER_ALIGNMENT);
         meanField.setEditable(false);
 
@@ -197,7 +207,7 @@ public class CPUalgorithmsRandomizePanel extends JPanel {
         stdDevLabel.setForeground(new Color(243, 245, 240));
 
         stdDevField = new JTextField(10);
-        stdDevField.setMaximumSize(new Dimension(200, 30));
+        stdDevField.setMaximumSize(new Dimension(200, 20));
         stdDevField.setAlignmentX(Component.CENTER_ALIGNMENT);
         stdDevField.setEditable(false);
 
@@ -207,7 +217,7 @@ public class CPUalgorithmsRandomizePanel extends JPanel {
         gaussMinLabel.setForeground(new Color(243, 245, 240));
 
         gaussMinField = new JTextField(10);
-        gaussMinField.setMaximumSize(new Dimension(200, 30));
+        gaussMinField.setMaximumSize(new Dimension(200, 20));
         gaussMinField.setAlignmentX(Component.CENTER_ALIGNMENT);
         gaussMinField.setEditable(false);
 
@@ -217,7 +227,7 @@ public class CPUalgorithmsRandomizePanel extends JPanel {
         gaussMaxLabel.setForeground(new Color(243, 245, 240));
 
         gaussMaxField = new JTextField(10);
-        gaussMaxField.setMaximumSize(new Dimension(200, 30));
+        gaussMaxField.setMaximumSize(new Dimension(200, 20));
         gaussMaxField.setAlignmentX(Component.CENTER_ALIGNMENT);
         gaussMaxField.setEditable(false);
     }
@@ -289,7 +299,7 @@ public class CPUalgorithmsRandomizePanel extends JPanel {
 
     private void createAmountField() {
         amountField = new JTextField(10);
-        amountField.setMaximumSize(new Dimension(200, 30));
+        amountField.setMaximumSize(new Dimension(200, 20));
         amountField.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
 
@@ -297,7 +307,7 @@ public class CPUalgorithmsRandomizePanel extends JPanel {
         startButton = new JButton("Start");
         startButton.setVisible(true);
         startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        startButton.setFont(new Font("Helvetica", Font.BOLD, 20));
+        startButton.setFont(new Font("Helvetica", Font.BOLD, 15));
         startButton.setBackground(new Color(204, 119, 34));
         startButton.setForeground(new Color(243, 245, 240));
         startButton.setBorderPainted(false);
@@ -317,6 +327,76 @@ public class CPUalgorithmsRandomizePanel extends JPanel {
         });
     }
 
+    private void createSeriesAmountLabel(){
+        seriesAmountLabel = new JLabel("Series amount");
+        seriesAmountLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        seriesAmountLabel.setFont(new Font("Helvetica", Font.PLAIN, 20));
+        seriesAmountLabel.setForeground(new Color(243, 245, 240));
+    }
+
+    private void createUpperPanel(){
+        upperPanel = new JPanel();
+        upperPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        upperPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        upperPanel.setBackground(new Color(60, 65, 66));
+        upperPanel.setPreferredSize(new Dimension(1200, 30));
+        upperPanel.setMinimumSize(new Dimension(1200, 50));
+        upperPanel.setMaximumSize(new Dimension(1200, 50));
+        upperPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+    }
+
+    private void createSeriesAmountField(){
+        seriesAmountField = new JTextField(10);
+        seriesAmountField.setMaximumSize(new Dimension(200, 20));
+        seriesAmountField.setAlignmentX(Component.CENTER_ALIGNMENT);
+    }
+
+    private void createSingleSeriesButtonsGroup() {
+        singleButton = new JRadioButton("Single");
+        seriesButton = new JRadioButton("Series");
+
+        singleButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        seriesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        singleButton.setBackground(new Color(60, 65, 66));
+        seriesButton.setBackground(new Color(60, 65, 66));
+
+        singleButton.setForeground(new Color(243, 245, 240));
+        seriesButton.setForeground(new Color(243, 245, 240));
+
+        singleSeriesGroup = new ButtonGroup();
+
+        singleButton.setSelected(true);
+
+        seriesAmountField.setEditable(false);
+
+        singleSeriesGroup.add(singleButton);
+        singleSeriesGroup.add(seriesButton);
+
+        seriesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                seriesAmountField.setEditable(true);
+            }
+        });
+
+        singleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                seriesAmountField.setEditable(false);
+            }
+        });
+    }
+
+    public String getSelectedSingleSeriesOption() {
+        if (singleButton.isSelected()) {
+            return "Option 1";
+        } else if (seriesButton.isSelected()) {
+            return "Option 2";
+        }
+        return "None";
+    }
+
     public JButton getGoBackButton() {
         return goBackButton;
     }
@@ -326,7 +406,11 @@ public class CPUalgorithmsRandomizePanel extends JPanel {
     }
 
     private void addThings() {
-        this.add(goBackButton);
+        //this.add(goBackButton);
+
+        upperPanel.add(goBackButton);
+        upperPanel.add(startButton);
+        this.add(upperPanel);
         this.add(amountLabel);
         this.add(amountField);
         this.add(arrivalTimeLabel);
@@ -352,7 +436,12 @@ public class CPUalgorithmsRandomizePanel extends JPanel {
         this.add(gaussMinField);
         this.add(gaussMaxLabel);
         this.add(gaussMaxField);
-        this.add(startButton);
+        this.add(singleButton);
+        this.add(seriesButton);
+        this.add(seriesAmountLabel);
+        this.add(seriesAmountField);
+
+        //this.add(startButton);
     }
 
     public void setThisVisible() {
@@ -484,7 +573,7 @@ public class CPUalgorithmsRandomizePanel extends JPanel {
     public int getArrivalRandomMin() {
         try {
             String text = arrivalRandomMinField.getText().trim();
-            if(Integer.parseInt(text) <= 0){
+            if(Integer.parseInt(text) < 0){
                 JOptionPane.showMessageDialog(this, "Invalid input for Min value. Please enter a valid integer.", "Input Error", JOptionPane.ERROR_MESSAGE);
                 return -1;
             }
@@ -505,6 +594,20 @@ public class CPUalgorithmsRandomizePanel extends JPanel {
             return Integer.parseInt(text);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Invalid input for Max value. Please enter a valid integer.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return -1; // Return a default or error value.
+        }
+    }
+
+    public int getSeriesAmount() {
+        try {
+            String text = seriesAmountField.getText().trim();
+            if(Integer.parseInt(text) <= 0){
+                JOptionPane.showMessageDialog(this, "Invalid input for Series amount. Please enter a valid integer.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return -1;
+            }
+            return Integer.parseInt(text);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid input for Series amount. Please enter a valid integer.", "Input Error", JOptionPane.ERROR_MESSAGE);
             return -1; // Return a default or error value.
         }
     }

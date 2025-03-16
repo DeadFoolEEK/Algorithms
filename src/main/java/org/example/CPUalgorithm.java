@@ -37,7 +37,7 @@ public abstract class CPUalgorithm {
         for(Process process : processes){
             sum += process.getWt();
         }
-        meanWt = (double) sum /processes.size();
+        meanWt = (double) sum/processes.size();
     }
 
     protected void setMeanTat(){

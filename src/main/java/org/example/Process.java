@@ -15,11 +15,13 @@ public class Process {
     // completion time
     private int ct;
     private boolean isDone;
+    private int remainingBt;
 
     Process(int pid, int at, int bt){
         this.pid = pid;
         this.at = at;
         this.bt = bt;
+        this.remainingBt = bt;
         isDone = false;
     }
 
@@ -69,6 +71,14 @@ public class Process {
 
     public void setIsDoneToTrue(){
         isDone = true;
+    }
+
+    public void setRemainingBt(int remainingBt) {
+        this.remainingBt = remainingBt;
+    }
+
+    public int getRemainingBt() {
+        return remainingBt;
     }
 
 }

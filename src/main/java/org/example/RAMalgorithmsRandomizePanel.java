@@ -2,6 +2,8 @@ package org.example;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class RAMalgorithmsRandomizePanel extends JPanel {
 
@@ -17,6 +19,11 @@ public class RAMalgorithmsRandomizePanel extends JPanel {
     private JLabel referencesRandomMaxLabel;
     private JTextField referencesRandomMinField;
     private JTextField referencesRandomMaxField;
+    private JRadioButton singleButton;
+    private JRadioButton seriesButton;
+    private ButtonGroup singleSeriesGroup;
+    private JLabel seriesAmountLabel;
+    private JTextField seriesAmountField;
 
     RAMalgorithmsRandomizePanel(Frame frame){
         this.frame = frame;
@@ -30,6 +37,9 @@ public class RAMalgorithmsRandomizePanel extends JPanel {
         createNumberOfFramesLabel();
         createNumberOfFramesField();
         createReferencesRandomOptions();
+        createSeriesAmountLabel();
+        createSeriesAmountField();
+        createSingleSeriesButtonsGroup();
         addThings();
     }
 
@@ -141,6 +151,64 @@ public class RAMalgorithmsRandomizePanel extends JPanel {
         });
     }
 
+    private void createSeriesAmountLabel(){
+        seriesAmountLabel = new JLabel("Series amount");
+        seriesAmountLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        seriesAmountLabel.setFont(new Font("Helvetica", Font.PLAIN, 20));
+        seriesAmountLabel.setForeground(new Color(243, 245, 240));
+    }
+
+    private void createSeriesAmountField(){
+        seriesAmountField = new JTextField(10);
+        seriesAmountField.setMaximumSize(new Dimension(200, 30));
+        seriesAmountField.setAlignmentX(Component.CENTER_ALIGNMENT);
+    }
+
+    private void createSingleSeriesButtonsGroup() {
+        singleButton = new JRadioButton("Single");
+        seriesButton = new JRadioButton("Series");
+
+        singleButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        seriesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        singleButton.setBackground(new Color(60, 65, 66));
+        seriesButton.setBackground(new Color(60, 65, 66));
+
+        singleButton.setForeground(new Color(243, 245, 240));
+        seriesButton.setForeground(new Color(243, 245, 240));
+
+        singleSeriesGroup = new ButtonGroup();
+
+        singleButton.setSelected(true);
+        seriesAmountField.setEditable(false);
+
+        singleSeriesGroup.add(singleButton);
+        singleSeriesGroup.add(seriesButton);
+
+        seriesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                seriesAmountField.setEditable(true);
+            }
+        });
+
+        singleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                seriesAmountField.setEditable(false);
+            }
+        });
+    }
+
+    public String getSelectedSingleSeriesOption() {
+        if (singleButton.isSelected()) {
+            return "Option 1";
+        } else if (seriesButton.isSelected()) {
+            return "Option 2";
+        }
+        return "None";
+    }
+
     private void addThings() {
         this.add(goBackButton);
         this.add(amountLabel);
@@ -152,6 +220,10 @@ public class RAMalgorithmsRandomizePanel extends JPanel {
         this.add(referencesRandomMaxField);
         this.add(numberOfFramesLabel);
         this.add(numberOfFramesField);
+        this.add(singleButton);
+        this.add(seriesButton);
+        this.add(seriesAmountLabel);
+        this.add(seriesAmountField);
         this.add(startButton);
     }
 
@@ -202,7 +274,7 @@ public class RAMalgorithmsRandomizePanel extends JPanel {
     public int getReferencesRandomMin() {
         try {
             String text = referencesRandomMinField.getText().trim();
-            if(Integer.parseInt(text) <= 0){
+            if(Integer.parseInt(text) < 0){
                 JOptionPane.showMessageDialog(this, "Invalid input for Min value. Please enter a valid integer.", "Input Error", JOptionPane.ERROR_MESSAGE);
                 return -1;
             }
@@ -223,6 +295,20 @@ public class RAMalgorithmsRandomizePanel extends JPanel {
             return Integer.parseInt(text);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Invalid input for Max value. Please enter a valid integer.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return -1; // Return a default or error value.
+        }
+    }
+
+    public int getSeriesAmount() {
+        try {
+            String text = seriesAmountField.getText().trim();
+            if(Integer.parseInt(text) <= 1){
+                JOptionPane.showMessageDialog(this, "Invalid input for Series amount. Please enter a valid integer.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return -1;
+            }
+            return Integer.parseInt(text);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid input for Series amount. Please enter a valid integer.", "Input Error", JOptionPane.ERROR_MESSAGE);
             return -1; // Return a default or error value.
         }
     }

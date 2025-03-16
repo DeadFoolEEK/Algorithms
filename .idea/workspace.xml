@@ -4,18 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a4fdf19-46de-4847-b30f-191f26ea6836" name="Changes" comment="Added RAMalgorithmsRandomizePanel class&#10;Fixed bug in Results class, wrong algorithm to get data from ArrayLis (index out of range)&#10;Changed data type given by methods from ProcessesGenerator class (now ArrayList&lt;Integer&gt;, later int array)&#10;Finished GUI in CPUalgorithmsRandomizePanel class">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/ReferencesGenerator.java" afterDir="false" />
+    <list default="true" id="4a4fdf19-46de-4847-b30f-191f26ea6836" name="Changes" comment="Added ReferencesGenerator class&#10;FileOperator class can now save results &#10;Finished GUI in ResultsPanel&#10;Little changes in SJF algorithm logic">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/ResultsSeries.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/ResultsSeriesPanelCPU.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/ResultsSeriesPanelRAM.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/SJFalgorithmPreemptive.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/SeriesCPUchartsPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/SeriesRAMchartsPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/daneRAM.txt" beforeDir="false" afterPath="$PROJECT_DIR$/daneRAM.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/CPUalgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/CPUalgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/CPUalgorithmsRandomizePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/CPUalgorithmsRandomizePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/FCFSalgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/FCFSalgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/FIFOalgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/FIFOalgorithm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/FileOperator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/FileOperator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Frame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Frame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/RAMalgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/RAMalgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Process.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Process.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/RAMalgorithmsRandomizePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/RAMalgorithmsRandomizePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Results.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Results.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ResultsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ResultsPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/SJFalgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/SJFalgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/SJFalgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/SJFalgorithmNonPreemptive.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +124,14 @@
       <option name="project" value="LOCAL" />
       <updated>1735255240072</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Added ReferencesGenerator class&#10;FileOperator class can now save results &#10;Finished GUI in ResultsPanel&#10;Little changes in SJF algorithm logic">
+      <created>1735339667267</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1735339667267</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -146,6 +163,7 @@
     <MESSAGE value="FileOperator (reading data from .txt files) has been added&#10;Frame (GUI class) has been added&#10;Menu (GUI class) has been added" />
     <MESSAGE value="Fixed FCFS (algorithm doesn't sort array of unkown processes)&#10;Added CPUalgorithmsRandomizePanel class&#10;Added ProcessesGenerator class&#10;Added some GUI" />
     <MESSAGE value="Added RAMalgorithmsRandomizePanel class&#10;Fixed bug in Results class, wrong algorithm to get data from ArrayLis (index out of range)&#10;Changed data type given by methods from ProcessesGenerator class (now ArrayList&lt;Integer&gt;, later int array)&#10;Finished GUI in CPUalgorithmsRandomizePanel class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added RAMalgorithmsRandomizePanel class&#10;Fixed bug in Results class, wrong algorithm to get data from ArrayLis (index out of range)&#10;Changed data type given by methods from ProcessesGenerator class (now ArrayList&lt;Integer&gt;, later int array)&#10;Finished GUI in CPUalgorithmsRandomizePanel class" />
+    <MESSAGE value="Added ReferencesGenerator class&#10;FileOperator class can now save results &#10;Finished GUI in ResultsPanel&#10;Little changes in SJF algorithm logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added ReferencesGenerator class&#10;FileOperator class can now save results &#10;Finished GUI in ResultsPanel&#10;Little changes in SJF algorithm logic" />
   </component>
 </project>

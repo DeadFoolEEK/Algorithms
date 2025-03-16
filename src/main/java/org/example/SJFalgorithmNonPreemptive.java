@@ -1,8 +1,8 @@
 package org.example;
 
-public class SJFalgorithm extends CPUalgorithm {
+public class SJFalgorithmNonPreemptive extends CPUalgorithm {
 
-    SJFalgorithm() {
+    SJFalgorithmNonPreemptive() {
         super();
         this.name = "SJF";
     }

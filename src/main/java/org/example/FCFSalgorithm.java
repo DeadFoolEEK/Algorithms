@@ -45,7 +45,6 @@ public class FCFSalgorithm extends CPUalgorithm {
             nextProcess.setTat(nextProcess.getCt() - nextProcess.getAt());
             nextProcess.setWt(nextProcess.getTat() - nextProcess.getBt());
             nextProcess.setIsDoneToTrue();
-
             timePassed = nextProcess.getCt();
         }
 

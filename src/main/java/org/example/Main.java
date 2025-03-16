@@ -1,8 +1,7 @@
 package org.example;
 
-import jdk.dynalink.NamedOperation;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Main {
 
@@ -15,6 +14,63 @@ public class Main {
         //dataReadTestRAM();
         new Frame();
         //testProcessesGenerator();
+        //testResultsSeriesCPU();
+        //testResultsSeriesRAM();
+    }
+
+    public static void testResultsSeriesCPU(){
+        ArrayList<ArrayList<Integer>> data = new ArrayList<>();
+        ProcessesGenerator processesGenerator = new ProcessesGenerator();
+
+        int n = 10;
+        int processesAmount = 5;
+
+        for(int i = 0 ; i < n; i++){
+            data.add(processesGenerator.generateArrivalTimeConst(processesAmount));
+            data.add(processesGenerator.generateBurstTimeTotalRandom(processesAmount,1,10));
+        }
+
+        ResultsSeries resultsSeries = new ResultsSeries("CPU",data, new ArrayList<ArrayList<Integer>>(), 0);
+
+        System.out.println("FCFS");
+
+        System.out.println(resultsSeries.getFCFSwtMeans());
+        System.out.println(resultsSeries.getFCFSwtMean());
+        System.out.println(resultsSeries.getFCFStatMeans());
+        System.out.println(resultsSeries.getFCFStatMean());
+
+        System.out.println("SJF");
+
+        System.out.println(resultsSeries.getSJFnonPreemptiveWtMeans());
+        System.out.println(resultsSeries.getSJFnonPreemptiveWtMean());
+        System.out.println(resultsSeries.getSJFnonPreemptiveTatMeans());
+        System.out.println(resultsSeries.getSJFnonPreemptiveTatMean());
+
+    }
+
+    public static void testResultsSeriesRAM(){
+        ReferencesGenerator referencesGenerator = new ReferencesGenerator();
+        ArrayList<ArrayList<Integer>> data = new ArrayList<>();
+        int numberOfFrames = 3;
+        int n = 10;
+        int referencesAmount = 50;
+
+        for(int i = 0; i < n; i++){
+            data.add(referencesGenerator.generateReferencesTotalRandom(referencesAmount,0,10,numberOfFrames));
+        }
+
+        ResultsSeries resultsSeries = new ResultsSeries("RAM",new ArrayList<ArrayList<Integer>>(), data, numberOfFrames);
+
+        System.out.println("FIFO");
+
+        System.out.println(resultsSeries.getFIFOmeanHitRate());
+        System.out.println(Arrays.toString(resultsSeries.getFIFOhitRates()));
+
+        System.out.println("LRU");
+
+        System.out.println(resultsSeries.getLRUmeanHitRate());
+        System.out.println(Arrays.toString(resultsSeries.getLRUhitRates()));
+
     }
 
     public static void testProcessesGenerator(){
@@ -88,7 +144,7 @@ public class Main {
         Process process4 = new Process(4,0,3);
         Process process5 = new Process(5,4,4);
 
-        SJFalgorithm sjf = new SJFalgorithm();
+        SJFalgorithmNonPreemptive sjf = new SJFalgorithmNonPreemptive();
 
         sjf.addProcess(process1);
         sjf.addProcess(process2);

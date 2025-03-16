@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 public class Results{
 
-    private FCFSalgorithm fcfSalgorithm;
-    private SJFalgorithm sjFalgorithm;
-    private FIFOalgorithm fifOalgorithm;
-    private LRUalgorithm lrUalgorithm;
+    private FCFSalgorithm fcfsAlgorithm;
+    private SJFalgorithmNonPreemptive sjfAlgorithmNonPreemptive;
+    private SJFalgorithmPreemptive sjfAlgorithmPreemptive;
+    private FIFOalgorithm fifoAlgorithm;
+    private LRUalgorithm lruAlgorithm;
     private String type;
+    private int framesAmount;
 
     Results(String type, ArrayList<ArrayList<Integer>> dataToCPUalgorithm, ArrayList<Integer> dataToRAMalgorithm){
         this.type = type;
@@ -29,51 +31,61 @@ public class Results{
                 processes.add(new Process(i, arrivalTime, burstTime));
             }
 
-            fcfSalgorithm = new FCFSalgorithm();
-            sjFalgorithm = new SJFalgorithm();
+            fcfsAlgorithm = new FCFSalgorithm();
+            sjfAlgorithmNonPreemptive = new SJFalgorithmNonPreemptive();
+            sjfAlgorithmPreemptive = new SJFalgorithmPreemptive();
 
             for (Process process : processes) {
-                fcfSalgorithm.addProcess(new Process(process.getPid(), process.getAt(), process.getBt()));
-                sjFalgorithm.addProcess(new Process(process.getPid(), process.getAt(), process.getBt()));
+                fcfsAlgorithm.addProcess(new Process(process.getPid(), process.getAt(), process.getBt()));
+                sjfAlgorithmNonPreemptive.addProcess(new Process(process.getPid(), process.getAt(), process.getBt()));
+                sjfAlgorithmPreemptive.addProcess(new Process(process.getPid(), process.getAt(), process.getBt()));
             }
 
-            fcfSalgorithm.performAlgorithm();
-            sjFalgorithm.performAlgorithm();
+            fcfsAlgorithm.performAlgorithm();
+            sjfAlgorithmNonPreemptive.performAlgorithm();
+            sjfAlgorithmPreemptive.performAlgorithm();
 
         }
         else if(type.equals("RAM")){
-            int numberOfFrames = 0;
             int[] referencesSequence = new int[dataToRAMalgorithm.size()-1];
             int[] referencesSequence1 = new int[dataToRAMalgorithm.size()-1];
             for(int i = 0; i < dataToRAMalgorithm.size() ;i++){
                 if(i == 0){
-                    numberOfFrames = dataToRAMalgorithm.get(i);
+                    framesAmount = dataToRAMalgorithm.get(i);
                     continue;
                 }
                 referencesSequence[i-1] = dataToRAMalgorithm.get(i);
                 referencesSequence1[i-1] = dataToRAMalgorithm.get(i);
             }
-            fifOalgorithm = new FIFOalgorithm(numberOfFrames, referencesSequence);
-            lrUalgorithm = new LRUalgorithm(numberOfFrames, referencesSequence1);
-            fifOalgorithm.performAlgorithm();
-            lrUalgorithm.performAlgorithm();
+            fifoAlgorithm = new FIFOalgorithm(framesAmount, referencesSequence);
+            lruAlgorithm = new LRUalgorithm(framesAmount, referencesSequence1);
+            fifoAlgorithm.performAlgorithm();
+            lruAlgorithm.performAlgorithm();
         }
     }
 
-    public FCFSalgorithm getFcfSalgorithm(){
-        return fcfSalgorithm;
+    public int getFramesAmount(){
+        return framesAmount;
     }
 
-    public FIFOalgorithm getFifOalgorithm(){
-        return fifOalgorithm;
+    public FCFSalgorithm getFcfsAlgorithm(){
+        return fcfsAlgorithm;
     }
 
-    public LRUalgorithm getLrUalgorithm(){
-        return lrUalgorithm;
+    public FIFOalgorithm getFifoAlgorithm(){
+        return fifoAlgorithm;
     }
 
-    public SJFalgorithm getSjFalgorithm(){
-        return sjFalgorithm;
+    public LRUalgorithm getLruAlgorithm(){
+        return lruAlgorithm;
+    }
+
+    public SJFalgorithmNonPreemptive getSJFalgorithmNonPreemptive(){
+        return sjfAlgorithmNonPreemptive;
+    }
+
+    public SJFalgorithmPreemptive getSJFalgorithmPreemptive(){
+        return sjfAlgorithmPreemptive;
     }
 
 }

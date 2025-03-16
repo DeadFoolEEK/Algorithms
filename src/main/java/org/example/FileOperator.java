@@ -5,10 +5,12 @@ import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -209,13 +211,60 @@ public class FileOperator {
 
     public void saveCPUresults(ArrayList<Process> processes, double[] meanWt, double[] meanTat){
         Path path = Paths.get("zapis.txt");
-        String[] data = new String[processes.size()+2];
-        data[0] =  String.valueOf(meanWt[0]) + " " + String.valueOf(meanWt[1]);
-        data[1] =  String.valueOf(meanTat[0]) + " " + String.valueOf(meanTat[1]);
-        int i = 2;
+        String[] data = new String[processes.size()+4];
+        data[0] =  String.valueOf(meanWt[0]) + " " + String.valueOf(meanWt[1] + " " + String.valueOf(meanWt[2]));
+        data[1] =  String.valueOf(meanTat[0]) + " " + String.valueOf(meanTat[1]) + " " + String.valueOf(meanTat[2]);
+        data[2] = "START";
+        int i = 3;
         for(Process process : processes){
             data[i] = String.valueOf(process.getAt()) + " " + String.valueOf(process.getBt());
             i++;
+        }
+        data[i] = "STOP";
+        List<String> dataToSave = List.of(data);
+        try {
+            Files.write(path, dataToSave);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveRAMresults(int[] referencesSequence, int[] totalPageFaults, int[] totalHits, int framesAmount){
+        Path path = Paths.get("zapis.txt");
+        String[] data = new String[5];
+        data[0] = (double)totalHits[0]/referencesSequence.length + " " + (double)totalHits[1]/referencesSequence.length;
+        data[1] = "START";
+        data[2] = String.valueOf(framesAmount);
+
+        StringBuilder dataBuilder = new StringBuilder();
+        for (int reference : referencesSequence) {
+            dataBuilder.append(reference).append(" ");
+        }
+        data[3] = dataBuilder.toString().trim();
+        data[4] = "STOP";
+        List<String> dataToSave = Arrays.asList(data);
+
+        try {
+            Files.write(path, dataToSave);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveCPUresultsSeries(ArrayList<ArrayList<Process>> processes, double[] meanWt, double[] meanTat){
+        Path path = Paths.get("zapis.txt");
+        String[] data = new String[processes.size()*processes.get(0).size()+2+processes.size()];
+        data[0] =  String.valueOf(meanWt[0]) + " " + String.valueOf(meanWt[1]) + " " + String.valueOf(meanWt[2]);
+        data[1] =  String.valueOf(meanTat[0]) + " " + String.valueOf(meanTat[1] + " " + String.valueOf(meanTat[2]));
+        int line = 2;
+        for(int i = 0; i < processes.size(); i++){
+            data[line] = "";
+            line++;
+            for(int j = 0; j < processes.get(i).size(); j++){
+                StringBuilder dataBuilder = new StringBuilder(String.valueOf(processes.get(i).get(j).getAt()) + " " + String.valueOf(processes.get(i).get(j).getBt()));
+                data[line] = dataBuilder.toString();
+                line++;
+            }
         }
         List<String> dataToSave = List.of(data);
         try {
@@ -225,8 +274,26 @@ public class FileOperator {
         }
     }
 
-    public void saveRAMresults(int[] referencesSequence, int[] totalPageFaults, int[] totalHits){
-
+    public void saveRAMresultsSeries(ArrayList<ArrayList<Integer>> references, double[] hitRates, int framesAmount){
+        Path path = Paths.get("zapis.txt");
+        String[] data = new String[references.size()+2];
+        data[0] = hitRates[0] + " " + hitRates[1];
+        data[1] = String.valueOf(framesAmount);
+        int line = 2;
+        for(int i = 0; i < references.size(); i++){
+            StringBuilder dataBuilder = new StringBuilder();
+            for(int j = 0; j < references.get(i).size(); j++){
+                dataBuilder.append(references.get(i).get(j)).append(" ");
+            }
+            data[line] = dataBuilder.toString();
+            line++;
+        }
+        List<String> dataToSave = List.of(data);
+        try {
+            Files.write(path, dataToSave);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean getIsEverythingOk(){
